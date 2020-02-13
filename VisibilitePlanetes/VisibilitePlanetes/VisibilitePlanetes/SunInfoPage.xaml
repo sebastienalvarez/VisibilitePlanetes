@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VisibilitePlanetes.SunInfoPage"
+             BackgroundImage="FondEcranAppAlpha.png">
+    
+    <ContentPage.Content>
+        <StackLayout Margin="15, 0, 15, 0">
+
+            <Label Text="Données non calculées..." IsVisible="{Binding ComputationImpossible}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+
+            <Grid IsVisible="{Binding ComputationPossible}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="25"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="25"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="25"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="35*"></ColumnDefinition>
+                    <ColumnDefinition Width="65*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <!--Zone données 1 : heures de lever et coucher civiles du Soleil-->
+                <Label Grid.Row="1" Grid.Column="0" Text="Heure lever :"/>
+                <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <Label Text="{Binding Soleil.HeureLocaleLever, StringFormat='{}{0:hh:mm}'}"/>
+                    <Label Text="{Binding Soleil.AzimutLever, StringFormat='{}  (Azimut {0:F1}°)'}"/>
+                </StackLayout>
+
+                <Label Grid.Row="2" Grid.Column="0" Text="Heure coucher :"/>
+                <StackLayout Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                    <Label Text="{Binding Soleil.HeureLocaleCoucher, StringFormat='{}{0:HH:mm}'}"/>
+                    <Label Text="{Binding Soleil.AzimutCoucher, StringFormat='{}  (Azimut {0:F1}°)'}"/>
+                </StackLayout>
+
+                <Label Grid.Row="3" Grid.Column="0" Text="Durée du jour :"/>
+                <Label Grid.Row="3" Grid.Column="1" Text="{Binding DureeJour, StringFormat='{}{0:hh\\:mm}'}"/>
+
+                <!--Zone données 2 : heures de lever et coucher astronomiques du Soleil-->
+                <Label Grid.Row="5" Grid.Column="0" Text="Début nuit :"/>
+                <Label Grid.Row="5" Grid.Column="1" Text="{Binding HeureCoucherAstronomique, StringFormat='{}{0:HH:mm} (altitude -18°)'}"/>
+                <Label Grid.Row="6" Grid.Column="0" Text="Fin nuit :" MinimumWidthRequest="100"/>
+                <Label Grid.Row="6" Grid.Column="1" Text="{Binding HeureLeverAstronomique, StringFormat='{}{0:hh:mm} (altitude -12°)'}"/>
+                <Label Grid.Row="7" Grid.Column="0" Text="Durée nuit :" MinimumWidthRequest="100"/>
+                <Label Grid.Row="7" Grid.Column="1" Text="{Binding DureeNuitAstronomique, StringFormat='{}{0:hh\\:mm}'}"/>
+
+                <!--Zone données 3 : Coordonnées équatoriales topocentriques du Soleil-->
+                <Label Grid.Row="9" Grid.Column="0" Text="Ascension droite :"/>
+                <StackLayout Grid.Row="9" Grid.Column="1" Orientation="Horizontal">
+                    <Label Text="{Binding Soleil.AscensionDroiteTopocentrique.DegresOuHeures, StringFormat='{}{0:D2}h'}"/>
+                    <Label Text="{Binding Soleil.AscensionDroiteTopocentrique.Minute, StringFormat='{}{0:D2}min'}"/>
+                    <Label Text="{Binding Soleil.AscensionDroiteTopocentrique.Seconde, StringFormat='{}{0:F1}sec'}"/>
+                </StackLayout>
+                <Label Grid.Row="10" Grid.Column="0" Text="Déclinaison :"/>
+                <StackLayout Grid.Row="10" Grid.Column="1" Orientation="Horizontal">
+                    <Label Text="{Binding Soleil.DeclinaisonTopocentrique.DegresOuHeures, StringFormat='{}{0:D2}°'}"/>
+                    <Label Text="{Binding Soleil.DeclinaisonTopocentrique.Minute, StringFormat='{}{0:D2}min'}"/>
+                    <Label Text="{Binding Soleil.DeclinaisonTopocentrique.Seconde, StringFormat='{}{0:F0}sec'}"/>
+                </StackLayout>
+
+                <!--Zone données 4 : Coordonnées horizontales topocentriques du Soleil-->
+                <Label Grid.Row="12" Grid.Column="0" Text="Azimut actuel :"/>
+                <StackLayout Grid.Row="12" Grid.Column="1" Orientation="Horizontal">
+                    <Label Text="{Binding Soleil.AzimutTopocentrique.DegresOuHeures, StringFormat='{}{0:D2}°'}"/>
+                    <Label Text="{Binding Soleil.AzimutTopocentrique.Minute, StringFormat='{}{0:D2}min'}"/>
+                    <Label Text="{Binding Soleil.AzimutTopocentrique.Seconde, StringFormat='{}{0:F0}sec'}"/>
+                </StackLayout>
+                <Label Grid.Row="13" Grid.Column="0" Text="Altitude actuelle : "/>
+                <StackLayout Grid.Row="13" Grid.Column="1" Orientation="Horizontal">
+                    <Label Text="{Binding Soleil.AltitudeTopocentrique.DegresOuHeures, StringFormat='{}{0:D2}°'}"/>
+                    <Label Text="{Binding Soleil.AltitudeTopocentrique.Minute, StringFormat='{}{0:D2}min'}"/>
+                    <Label Text="{Binding Soleil.AltitudeTopocentrique.Seconde, StringFormat='{}{0:F0}sec'}"/>
+                </StackLayout>                
+            </Grid>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

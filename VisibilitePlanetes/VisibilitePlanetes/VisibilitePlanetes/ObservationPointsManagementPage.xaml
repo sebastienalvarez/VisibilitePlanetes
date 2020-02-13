@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:VisibilitePlanetes.ViewModel.Converters"
+             x:Class="VisibilitePlanetes.ObservationPointsManagementPage"
+             BackgroundImage="FondEcranAppAlpha.png">
+
+    <ContentPage.Resources>
+        <conv:GeolocalisationRemoveConverter x:Key="GeolocalisationRemoveConverter"></conv:GeolocalisationRemoveConverter>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="15, 0, 15, 0">
+
+                <Label Text="Modifier un lieu d'observation :" Margin="0, 25, 0, 0"/>
+
+                <Picker x:Name="PickerObservationPoints" ItemsSource="{Binding ListeLieuxObservation, Converter={StaticResource GeolocalisationRemoveConverter}}" ItemDisplayBinding="{Binding LieuObservation.NomLieuObservation}"
+                        FontSize="Medium"  Title="Sélectionner un lieu d'observation"
+                        SelectedIndexChanged="Picker_SelectedIndexChanged"></Picker>
+
+                <Button Text="Ajouter un lieu d'observation" IsEnabled="{Binding NombreMaxLieuObservationNonAtteint}" Margin="0, 25, 0, 0" Clicked="ButtonAdd_Clicked"/>
+
+                <Label Text="Détail du lieu d'observation :" Margin="0, 25, 0, 0"></Label>
+
+                <Grid IsEnabled="{Binding LieuObservationADefinir}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="35*"></ColumnDefinition>
+                        <ColumnDefinition Width="65*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Zone données 1 : Nom du lieu d'observation sélectionné-->
+                    <Label Grid.Row="1" Grid.Column="0" Text="Nom :" VerticalOptions="Center"/>
+                    <Entry x:Name="NomLieuObservation" Grid.Row="1" Grid.Column="1" Placeholder="Lieu observation" Text="{Binding LieuObservationEnCoursDeDefinition.LieuObservation.NomLieuObservation}" Keyboard="Text" HorizontalOptions="FillAndExpand" VerticalOptions="Center"></Entry>
+
+                    <!--Zone données 2 : Longitude du lieu d'observation sélectionné-->
+                    <Label Grid.Row="2" Grid.Column="0" Text="Longitude :" VerticalOptions="Center"/>
+                    <Grid Grid.Row="2" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Path=Value, Source={x:Reference LongitudeDegres}, StringFormat='{}{0} °'}" VerticalOptions="Center" HorizontalOptions="End"></Label>
+                        <Stepper Grid.Column="1" x:Name="LongitudeDegres" Minimum="-6" Maximum="10" Value="{Binding LieuObservationEnCoursDeDefinition.LieuObservation.Longitude.DegresOuHeures}" Scale="0.65" Margin="-20, 0, 0, 0"></Stepper>
+                    </Grid>
+
+                    <Grid Grid.Row="3" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Path=Value, Source={x:Reference LongitudeMinute}, StringFormat='{}{0} min'}" VerticalOptions="Center" HorizontalOptions="End"></Label>
+                        <Stepper Grid.Column="1" x:Name="LongitudeMinute" Minimum="0" Maximum="59" Value="{Binding LieuObservationEnCoursDeDefinition.LieuObservation.Longitude.Minute}" Scale="0.65" Margin="-20, 0, 0, 0"></Stepper>
+                    </Grid>
+
+                    <Grid Grid.Row="4" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Path=Value, Source={x:Reference LongitudeSeconde}, StringFormat='{}{0:F0} sec'}" VerticalOptions="Center" HorizontalOptions="End"></Label>
+                        <Stepper Grid.Column="1" x:Name="LongitudeSeconde" Minimum="0" Maximum="59" Value="{Binding LieuObservationEnCoursDeDefinition.LieuObservation.Longitude.Seconde}" Scale="0.65" Margin="-20, 0, 0, 0"></Stepper>
+                    </Grid>
+
+                    <!--Zone données 3 : Latitude du lieu d'observation sélectionné-->
+                    <Label Grid.Row="5" Grid.Column="0" Text="Latitude :" VerticalOptions="Center"/>
+                    <Grid Grid.Row="5" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Path=Value, Source={x:Reference LatitudeDegres}, StringFormat='{}{0} ° N'}" VerticalOptions="Center" HorizontalOptions="End"></Label>
+                        <Stepper Grid.Column="1" x:Name="LatitudeDegres" Minimum="40" Maximum="55" Value="{Binding LieuObservationEnCoursDeDefinition.LieuObservation.Latitude.DegresOuHeures}" Scale="0.65" Margin="-20, 0, 0, 0"></Stepper>
+                    </Grid>
+
+                    <Grid Grid.Row="6" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Path=Value, Source={x:Reference LatitudeMinute}, StringFormat='{}{0} min'}" VerticalOptions="Center" HorizontalOptions="End"></Label>
+                        <Stepper Grid.Column="1" x:Name="LatitudeMinute" Minimum="0" Maximum="59" Value="{Binding LieuObservationEnCoursDeDefinition.LieuObservation.Latitude.Minute}" Scale="0.65" Margin="-20, 0, 0, 0"></Stepper>
+                    </Grid>
+
+                    <Grid Grid.Row="7" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Path=Value, Source={x:Reference LatitudeSeconde}, StringFormat='{}{0:F0} sec'}" VerticalOptions="Center" HorizontalOptions="End"></Label>
+                        <Stepper Grid.Column="1" x:Name="LatitudeSeconde" Minimum="0" Maximum="59" Value="{Binding LieuObservationEnCoursDeDefinition.LieuObservation.Latitude.Seconde}" Scale="0.65" Margin="-20, 0, 0, 0"></Stepper>
+                    </Grid>
+
+                    <!--Zone données 4 : Altitude du lieu d'observation sélectionné-->
+                    <Label Grid.Row="8" Grid.Column="0" Text="Altitude :" VerticalOptions="Center"/>
+                    <Grid Grid.Row="8" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Path=Value, Source={x:Reference Altitude}, StringFormat='{}{0} m'}" VerticalOptions="Center" HorizontalOptions="End"></Label>
+                        <Slider Grid.Column="1" x:Name="Altitude" Minimum="0" Maximum="2000" Value="{Binding LieuObservationEnCoursDeDefinition.LieuObservation.Altitude}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"></Slider>
+                    </Grid>
+                </Grid>
+
+                <Button Text="Valider" IsEnabled="{Binding LieuObservationADefinir}" Margin="0, 25, 0, 25" Clicked="ButtonValidate_Clicked"/>
+
+            </StackLayout>
+            
+        </ScrollView>
+        
+    </ContentPage.Content>
+</ContentPage>

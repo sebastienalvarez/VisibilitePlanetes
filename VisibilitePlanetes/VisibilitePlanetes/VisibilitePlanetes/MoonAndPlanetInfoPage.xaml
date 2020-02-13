@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:VisibilitePlanetes.ViewModel.Converters"
+             x:Class="VisibilitePlanetes.MoonAndPlanetInfoPage"
+             BackgroundImage="FondEcranAppAlpha.png">
+
+    <ContentPage.Resources>
+        <conv:DistanceKmAUConverter x:Key="DistanceKmAUConverter"></conv:DistanceKmAUConverter>
+        <conv:PhaseMagnitudeConverter x:Key="PhaseMagnitudeConverter"></conv:PhaseMagnitudeConverter>
+        <conv:AltitudeToVisibilityConverter x:Key="AltitudeToVisibilityConverter"></conv:AltitudeToVisibilityConverter>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout Margin="15, 0, 15, 0">
+
+            <Label Text="Données non calculées..." IsVisible="{Binding ComputationImpossible}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+
+            <ListView ItemsSource="{Binding MoonAndPlanetsList}" IsVisible="{Binding ComputationPossible}" HasUnevenRows="true" IsPullToRefreshEnabled="True" Refreshing="ListView_Refreshing" ItemTapped="ListView_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid IsVisible="{Binding Selection.IsSelected}" VerticalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="35*"></ColumnDefinition>
+                                    <ColumnDefinition Width="65*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Zone données 1 : image du corps céleste-->
+                                <Image Grid.Row="1" Grid.Column="0" Source="{Binding Selection.ImageSourceSelected}" IsVisible="{Binding Planet.AltitudeTopocentrique.Decimale, Converter={StaticResource AltitudeToVisibilityConverter}, ConverterParameter=true}"/>
+                                <Image Grid.Row="1" Grid.Column="0" Source="{Binding Selection.ImageSourceNotSelected}" IsVisible="{Binding Planet.AltitudeTopocentrique.Decimale, Converter={StaticResource AltitudeToVisibilityConverter}, ConverterParameter=false}"/>
+                                <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                                    <Label Text="{Binding Selection.Name}" VerticalTextAlignment="Center"/>
+                                    <Label Text=" (NON VISIBLE)" VerticalTextAlignment="Center" TextColor="DarkRed" IsVisible="{Binding Planet.AltitudeTopocentrique.Decimale, Converter={StaticResource AltitudeToVisibilityConverter}, ConverterParameter=false}"></Label>
+                                </StackLayout>
+
+                                <!--Zone données 2 : heures de lever et coucher de la planète-->
+                                <Label Grid.Row="2" Grid.Column="0" Text="Heure lever :"/>
+                                <StackLayout Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                                     <Label Text="{Binding Planet.HeureLocaleLever, StringFormat='{}{0:HH:mm}'}"/>
+                                    <Label Text="{Binding Planet.AzimutLever, StringFormat='{}  (Azimut {0:F1}°)'}"/>
+                                </StackLayout>
+
+                                <Label Grid.Row="3" Grid.Column="0" Text="Heure coucher :"/>
+                                <StackLayout Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                                    <Label Text="{Binding Planet.HeureLocaleCoucher, StringFormat='{}{0:HH:mm}'}"/>
+                                    <Label Text="{Binding Planet.AzimutCoucher, StringFormat='{}  (Azimut {0:F1}°)'}"/>
+                                </StackLayout>
+
+                                <!--Zone données 3 : Coordonnées équatoriales topocentriques de la planète-->
+                                <Label Grid.Row="4" Grid.Column="0" Text="Ascension droite :"/>
+                                <StackLayout Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                                    <Label Text="{Binding Planet.AscensionDroiteTopocentrique.DegresOuHeures, StringFormat='{}{0:D2}h'}"/>
+                                    <Label Text="{Binding Planet.AscensionDroiteTopocentrique.Minute, StringFormat='{}{0:D2}min'}"/>
+                                    <Label Text="{Binding Planet.AscensionDroiteTopocentrique.Seconde, StringFormat='{}{0:F1}sec'}"/>
+                                </StackLayout>
+                                <Label Grid.Row="5" Grid.Column="0" Text="Déclinaison :"/>
+                                <StackLayout Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+                                    <Label Text="{Binding Planet.DeclinaisonTopocentrique.DegresOuHeures, StringFormat='{}{0:D2}°'}"/>
+                                    <Label Text="{Binding Planet.DeclinaisonTopocentrique.Minute, StringFormat='{}{0:D2}min'}"/>
+                                    <Label Text="{Binding Planet.DeclinaisonTopocentrique.Seconde, StringFormat='{}{0:F0}sec'}"/>
+                                </StackLayout>
+
+                                <!--Zone données 4 : Phase de la planète (si applicable)-->
+                                <Label Grid.Row="6" Grid.Column="0" Text="Phase :"/>
+                                <Label Grid.Row="6" Grid.Column="1" Text="{Binding Phase, Converter={StaticResource PhaseMagnitudeConverter}}"/>
+
+                                <!--Zone données 5 : Phase de la planète (si applicable)-->
+                                <Label Grid.Row="7" Grid.Column="0" Text="Magnitude :"/>
+                                <Label Grid.Row="7" Grid.Column="1" Text="{Binding Magnitude, Converter={StaticResource PhaseMagnitudeConverter}}"/>
+
+                                <!--Zone données 6 : Distance de la planète-->
+                                <Label Grid.Row="8" Grid.Column="0" Text="Distance :"/>
+                                <Label Grid.Row="8" Grid.Column="1" Text="{Binding Planet.R, Converter={StaticResource DistanceKmAUConverter}}"/>
+
+                                <!--Zone données 7 : Coordonnées horizontales topocentriques de la planète-->
+                                <Label Grid.Row="9" Grid.Column="0" Text="Azimut actuel :"/>
+                                <StackLayout Grid.Row="9" Grid.Column="1" Orientation="Horizontal">
+                                    <Label Text="{Binding Planet.AzimutTopocentrique.DegresOuHeures, StringFormat='{}{0:D2}°'}"/>
+                                    <Label Text="{Binding Planet.AzimutTopocentrique.Minute, StringFormat='{}{0:D2}min'}"/>
+                                    <Label Text="{Binding Planet.AzimutTopocentrique.Seconde, StringFormat='{}{0:F0}sec'}"/>
+                                </StackLayout>
+                                <Label Grid.Row="10" Grid.Column="0" Text="Altitude actuelle : "/>
+                                <StackLayout Grid.Row="10" Grid.Column="1" Orientation="Horizontal">
+                                    <Label Text="{Binding Planet.AltitudeTopocentrique.DegresOuHeures, StringFormat='{}{0:D2}°'}"/>
+                                    <Label Text="{Binding Planet.AltitudeTopocentrique.Minute, StringFormat='{}{0:D2}min'}"/>
+                                    <Label Text="{Binding Planet.AltitudeTopocentrique.Seconde, StringFormat='{}{0:F0}sec'}"/>
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

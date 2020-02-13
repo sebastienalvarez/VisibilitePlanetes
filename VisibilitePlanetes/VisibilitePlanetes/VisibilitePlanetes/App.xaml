@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VisibilitePlanetes.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--Couleurs utilisées dans l'application-->
+            <Color x:Key="CouleurFondOrange">#e47025</Color>
+            <Color x:Key="CouleurFondJaune">#fff5b6</Color>
+            <Color x:Key="CouleurItemMarronFonce">#634217</Color>
+            <Color x:Key="CouleurItemMarronClair">#efc070</Color>
+
+            <!--Style pour les boutons-->
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource CouleurFondOrange}"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource CouleurItemMarronFonce}"></Setter>
+                <Setter Property="CornerRadius" Value="5"></Setter>
+                <Setter Property="BorderWidth" Value="2"></Setter>
+                <Setter Property="BorderColor" Value="{StaticResource CouleurItemMarronFonce}"></Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

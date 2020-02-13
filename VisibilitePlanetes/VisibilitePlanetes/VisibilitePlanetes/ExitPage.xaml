@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VisibilitePlanetes.ExitPage"            
+             BackgroundImage="FondEcranAppAlpha.png">
+
+    <ContentPage.Content>
+        <StackLayout Margin="15, 0, 15, 0">
+            <Label Text="Visibilité des planètes v1.0" HorizontalOptions="Center" VerticalOptions="FillAndExpand" FontAttributes="Bold" FontSize="Large" Margin="0, 20, 0, 0"/>
+            <Label Text="Information en temps réel de la visibilité de la Lune et des planètes pour les astronomes amateurs ou tout curieux du ciel" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+            <Label Text="Calculs réalisés avec les théories semi-analytiques tronquées de l'IMCCE VSOP87 (Soleil et planètes), ELP2000-82B (Lune)" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Center" Margin="0, 10, 0, 40"/>
+            <Button Text="Quitter" Clicked="Button_Clicked"/>
+            <Label Text="Sébastien ALVAREZ - Août 2019" HorizontalOptions="Center" VerticalOptions="EndAndExpand"/>
+            <Label Text="(1ère application réalisée avec Xamarin.Forms)" HorizontalOptions="CenterAndExpand" Margin="0, 0, 0, 50"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

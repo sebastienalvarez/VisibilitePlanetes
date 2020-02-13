@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:VisibilitePlanetes.ViewModel.Converters"
+             x:Class="VisibilitePlanetes.PlanetSelectionPage"
+             BackgroundImage="FondEcranAppAlpha.png">
+
+    <ContentPage.Resources>
+        <conv:BoolToColorConverter x:Key="BoolToColorConverter"></conv:BoolToColorConverter>
+        <conv:BoolToImageSourceConverter x:Key="BoolToImageSourceConverter"></conv:BoolToImageSourceConverter>
+
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout Margin="15, 0, 15, 0">
+            <Label Text="Sélectionner les corps célestes à calculer (eux seuls apparaitront dans le menu 'Visibilité'" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Margin="0, 20, 0, 0"/>
+            <ListView x:Name="lvPlanetSelection" ItemsSource="{Binding SelectedPlanets}" ItemTapped="ListView_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <!--Je n'ai pas trouvé comment faire le Data Binding à l'item de la collection directement, la solution envisagée consistait à utiliser l'objet item puis en examinant la propriété
+                            IsSelected à utiliser un Converter BoolToImageSourceConverter pour renvoyer la bonne ressource (Selectionnee ou Non selectionnee)
+                            Pour palier au problème : création d'une nouvelle propriété ImageSource qui réalise ce mécanisme, par contre il faut bien penser à réaffecter la propriété lors du changement de valeur de IsSelected (dans l'event handler du coup)-->
+                        <ImageCell ImageSource="{Binding Path=ImageSource}"
+                                   Text="{Binding Path=Name}" TextColor="{Binding Path=IsSelected, Converter={StaticResource BoolToColorConverter}}"
+                                   Detail="{Binding Path=Details}" DetailColor="{Binding Path=IsSelected, Converter={StaticResource BoolToColorConverter}}">
+                        </ImageCell>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:VisibilitePlanetes"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+            x:Class="VisibilitePlanetes.MainPage"
+            BarBackgroundColor="{StaticResource CouleurFondOrange}"
+            android:TabbedPage.BarItemColor="{StaticResource CouleurItemMarronFonce}"
+            android:TabbedPage.BarSelectedItemColor="{StaticResource CouleurItemMarronClair}">
+
+    <!--Definition du bandeau supérieur de l'application (pour toutes les pages de l'application)-->
+    <NavigationPage.TitleView>
+        <Image Source="BandeauApp.png" HorizontalOptions="CenterAndExpand"  VerticalOptions="Center" Aspect="AspectFit"></Image>
+    </NavigationPage.TitleView>
+    
+    <local:InfoPage x:Name="PageInfo" Icon="IconInfoPage" Title="Visibilité" />
+    <local:ObservationPointsPage x:Name="PageObservationPoints" Icon="IconObservationPointsPage" Title="Lieux d'observation"/>
+    <local:PlanetSelectionPage x:Name="PagePlanetSelection" Icon="IconPlanetSelectionPage" Title="Corps célestes"/>
+    <local:ExitPage Icon="IconExitApp" Title="Quitter"/>
+
+</TabbedPage>
